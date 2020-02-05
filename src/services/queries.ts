@@ -22,22 +22,39 @@ query Login($email: String!, $password: String!) {
 `
 
 
+// export const GetUsersAndSkills = gql `
+// query {
+//     userSkills {
+//       _id,
+//       user {
+//         firstName,
+//         lastName,
+//         email
+//       }
+//       skill {
+//         name,
+//       }
+//       level,
+//     }
+//   }
+
 export const GetUsersAndSkills = gql `
 query {
-    userSkills {
-      _id,
-      user {
-        firstName,
-        lastName,
-        email
+    users {
+      firstName,
+      lastName,
+      email,
+      skills{
+        skill{
+          name
+        }    
+        level
       }
-      skill {
-        name,
-      }
-      level,
     }
-  }
-  `
+  }`
+
+
+//   `
 
 // export const SelectedPodcastQuery  = gql`
 //     query Podcasts($someId: ID!) {
