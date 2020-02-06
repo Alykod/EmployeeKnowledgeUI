@@ -1,6 +1,7 @@
 import React, { ReactComponentElement } from 'react'
 import Dashboard from '../../dashboard/'
 import Login from '../../login'
+import MyAccount from '../../userProfile'
 import {
     BrowserRouter as Router,
     Switch,
@@ -51,6 +52,9 @@ const Navigation = () => {
                 </Route>
                 <Route path="/dashboard" history={history}>
                     {handleAuthRoute(Dashboard)}
+                </Route>
+                <Route path="/myaccount" history={history}>
+                    {handleAuthRoute(MyAccount)}
                 </Route>
             </Switch>
         </Router>

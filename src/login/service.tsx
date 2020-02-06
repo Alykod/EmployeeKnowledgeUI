@@ -3,7 +3,6 @@ import { SignIn } from '../services/queries'
 import { ApolloError } from 'apollo-boost'
 import { client } from '../services/apolloClient';
 
-
 interface Login {
     login: LoginData
 }
@@ -40,9 +39,7 @@ export function validateUserInfo(email: String, password: String) {
     else return false
 }
 
-
-
-export const loginUser = async(email: String, password: String) => {
+export const useLoginUser = async(email: String, password: String) => {
     try {
         let result = await client.query({
             query: SignIn,
@@ -51,8 +48,9 @@ export const loginUser = async(email: String, password: String) => {
                 password: password
             }
         })
-        localStorage.setItem("token", result.data.login.token)
-        return true
+        localStorage.setItem("token", result.data.login.token);
+        
+        return result.data.login.userId
     } catch (err) {
         console.error(err)
         return false

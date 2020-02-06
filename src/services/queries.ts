@@ -22,6 +22,30 @@ query Login($email: String!, $password: String!) {
 `
 
 
+export const GetUser = gql `
+query UserById($userId: String!) {
+    userById(userId: $userId) {
+        firstName
+        lastName
+        skills{
+            level
+            skill {
+                name
+            }
+        }
+        _id
+        email
+    }
+}
+`
+
+export const CreateUserSkill = gql `
+mutation CreateUserSkill($skillName : String!, $level: Number!, $userId: String!) {
+    CreateUserSkill(skillName: $skillName, userId: $userId,  level: $level) {
+      user
+    }
+  }
+`
 // export const GetUsersAndSkills = gql `
 // query {
 //     userSkills {

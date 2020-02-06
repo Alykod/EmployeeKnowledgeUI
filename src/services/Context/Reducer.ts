@@ -7,9 +7,10 @@ interface Action {
 }
 
 export function reducer(state = initialState, action: Action) {
+  console.log(action.payload)
     switch (action.type) {
       case 'USER_DETAILS':
-        return { ...state, token: action.payload };
+        return { ...state, user: action.payload };
         case 'SET_TOKEN':
             return { ...state, token: action.payload };
         case "SET_SKILLS": 
