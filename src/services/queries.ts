@@ -40,9 +40,9 @@ query UserById($userId: String!) {
 `
 
 export const CreateUserSkill = gql `
-mutation CreateUserSkill($skillName : String!, $level: Number!, $userId: String!) {
+mutation CreateUserSkill($skillName : String!, $level: Int!, $userId: ID!) {
     CreateUserSkill(skillName: $skillName, userId: $userId,  level: $level) {
-      user
+     _id
     }
   }
 `

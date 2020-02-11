@@ -31,8 +31,13 @@ const StarBar = (props: Stars) => {
         }
 
         return (
-            <div className="skillStarBar is-flexed">
-                 <p className="is-size-4">{props.name} : {handleStarFill(mappableStars)}</p> 
+            <div className="skillStarBar field is-horizontal">
+                <div className="field-label is-normal">
+                <label className="label is-size-4 ">{props.name}:</label> 
+                </div>
+                 <div className="field-body is-size-4">
+                 {handleStarFill(mappableStars)}
+                </div>
             </div>
         )
     }

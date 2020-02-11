@@ -58,9 +58,9 @@ const Header = (props: any) => {
 
     const displayDropDown = () => {
         return (
-            <div className="navheader">
-            <label className="label">Skills</label>
-            <input className="input is-normal" list="availableSkills" value={selectedSkill} onChange={handleAutoComplete} placeholder="Filter by Skill"/>
+            <div className="navheader column is-full columns">
+            <label className="label column is-half">Skills</label>
+            <input className="input is-normal column is-half" list="availableSkills" value={selectedSkill} onChange={handleAutoComplete} placeholder="Filter by Skill"/>
             <datalist id="availableSkills">
                 {listOfSkills && listOfSkills.length > 0 && handleListOfSkills()}
             </datalist>
@@ -70,8 +70,8 @@ const Header = (props: any) => {
 
 
     return (
-        <nav className="navbar is-fixed-top" aria-label="dashboard filter">
-            <div className="navbar-menu columns is-centered">
+        <nav className="navbar is-fixed-top columns" aria-label="dashboard filter">
+            <div className="navbar-menu is-active column is-three-quarters is-centered">
                     {displayDropDown()}
             </div>
         </nav>

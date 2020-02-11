@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { client } from '../services/apolloClient';
 import { GetUser } from '../services/queries'
 import { useHistory } from 'react-router-dom';
@@ -14,11 +14,15 @@ const UserProfile = () => {
     if (!userId) {
         history.push("/")
     }
-    const { loading, error, data } = useQuery(GetUser, { variables: { userId: userId } })
+    const { loading, error, data, refetch } = useQuery(GetUser, { variables: { userId: userId } })
 
     useEffect(() => {
-        setUserData(data && data.userById)
+            setUserData(data && data.userById)
     }, [data])
+
+    const handleRefetech = () => {
+        refetch();
+    }
 
     const userDisplay = () => {
         console.log(userData)
@@ -31,15 +35,12 @@ const UserProfile = () => {
                         </div>
                     </div>
                 </section>
-               <section className="section">
-                   <div className="container">
+               <section className="section columns">
+                   <div className="column">
                    {handleSkillsDisplay()}
                    </div>
-                </section>
-                <section className="section">
-                   <div className="container">
-                       <AddSkill />
-                       {/* <h1 className="title">Add New Skills Here</h1> */}
+                   <div className="column">
+                   <AddSkill userData={userData} refetchUser={handleRefetech}/>
                    </div>
                 </section>
             </div>
@@ -58,9 +59,11 @@ const UserProfile = () => {
                 <p>You don't have any skills added <i className="fas fa-frown"></i></p>
                 )
         } else {
-            return userData.skills.map((skill:any, index: number) => {
+            return <div className="column is-offset-4"> {
+            userData.skills.map((skill:any, index: number) => {
                 return <StarsBar key={index} name={skill.skill.name}  filled={skill.level}/>
-            })
+            }) }
+            </div>
         }
        
     }

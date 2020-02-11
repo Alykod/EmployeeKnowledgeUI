@@ -1,17 +1,62 @@
 import React, { useState, useEffect } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { CreateUserSkill, GetSkills } from "../services/queries";
+import { useSelector } from "react-redux";
+import StarSelector from "./starSelector";
+import { useAddSkill } from "./services";
 
-const AddSkill = () => {
+const AddSkill = props => {
+  const userId = props.userData._id;
+  const userCurrentSkills = props.userData.skills;
   const [toggleAddNew, setToggleAddNew] = useState(false);
   const { loading, error, data } = useQuery(GetSkills);
+  const [addSkill, { values }] = useMutation(CreateUserSkill);
   const [availableSkills, setAvailableSkills] = useState([]);
+  const [selectedSkill, setSelectedSkill] = useState("");
+  const [level, setLevel] = useState(1);
 
   useEffect(() => {
     if (data) {
-      setAvailableSkills(data.skills);
+      handleAvailableSkills();
     }
   }, [data]);
+
+  const handleSkillValue = value => {
+    setLevel(value);
+  };
+
+  const handleAvailableSkills = () => {
+    if (userCurrentSkills.length == 0) {
+      setAvailableSkills(data.skills);
+    } else {
+      let mapUserExistingSkills = userCurrentSkills.map(allSkills => {
+        return allSkills.skill.name;
+      });
+      let allSkills = data.skills;
+      let filteredSkills = allSkills.filter(individualSkill => {
+        return !mapUserExistingSkills.includes(individualSkill.name);
+      });
+      setAvailableSkills(filteredSkills);
+    }
+  };
+  const handleResetComponent = () => {
+    props.refetchUser();
+    setLevel(1);
+    setSelectedSkill("");
+  }
+
+  const handleSubmit = () => {
+    if (selectedSkill !== "") {
+      addSkill({
+        variables: { userId: userId, skillName: selectedSkill, level: level }
+      }).then(() => {
+          props.refetchUser();
+          handleResetComponent();
+      });
+    } else {
+      alert("missing values");
+    }
+  };
 
   const displayInput = () => {
     return (
@@ -19,15 +64,34 @@ const AddSkill = () => {
         <div className="field-label is-normal">
           <label className="label">Skill</label>
         </div>
-        <div className="field-body">
-        <div className="field is-narrow">
-        <div className="control">
-        <input className="input is-danger" list="AvailableSkills" type="text" placeholder="React, .Net core etc" />
-        <datalist id="AvailableSkills">
-                {availableSkills && availableSkills.length > 0 && handleListOfSkills()}
-        </datalist>
-         </div>
-        </div>
+        <div className="field-body is-grouped">
+          <div className="field is-narrow">
+            <div className="control">
+              <input
+                className="input is-danger"
+                list="AvailableSkills"
+                type="text"
+                placeholder="React, .Net core etc"
+                value={selectedSkill}
+                onChange={e => setSelectedSkill(e.target.value)}
+              />
+              <datalist id="AvailableSkills">
+                {availableSkills &&
+                  availableSkills.length > 0 &&
+                  handleListOfSkills()}
+              </datalist>
+            </div>
+            <div className="control">
+              <StarSelector skillValue={handleSkillValue} level={level} />
+            </div>
+          </div>
+          <p className="field-body">
+            <button
+              className="button is-info"
+              onClick={() => handleSubmit(userId, selectedSkill, level)}>
+              Save
+            </button>
+          </p>
         </div>
       </div>
     );
@@ -35,9 +99,9 @@ const AddSkill = () => {
 
   const handleListOfSkills = () => {
     return availableSkills.map((skill, index) => {
-        return <option value={skill.name} key={index} />
-    })
-}
+      return <option value={skill.name} key={index} />;
+    });
+  };
 
   const displayAddNew = () => {
     return (
@@ -66,18 +130,8 @@ const AddSkill = () => {
   return toggleAddNew ? displayInput() : displayAddNew();
 };
 
-const HandleAddSkill = (userId, skill, level) => {
-  const { loading, error, data } = useQuery(CreateUserSkill, {
-    variables: { userId: userId, skill: skill, level: level }
-  });
-
-  const skillAdded = {
-    loading,
-    error,
-    data
-  };
-
-  return skillAdded;
-};
+// function HandleCall(userId, selectedSkill, level) {
+//     const {loading, data, error} = useAddSkill(userId, selectedSkill, level);
+// }
 
 export default AddSkill;

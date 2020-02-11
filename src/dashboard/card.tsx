@@ -48,7 +48,7 @@ const UserCard = (props:Props) => {
             <div className="card-content"> 
                 <p>{user.email}</p>
             </div>
-            {selectedSkill && <div className="card-footer columns is-centered">
+            {selectedSkill && <div className="card-footer is-flexed" style={{justifyContent: "center"}}>
                 {handleSelectedSkill()}
             </div>}
         </div>

@@ -26,8 +26,14 @@
 
 }
 
+datalist {
+    background-color: red;
+    max-height: 20vh;
+    overflow-y: auto;
+}
 
 .skillStarBar {
+    margin-top: 1em;
     justify-content: center;
     display: flex;
     align-items: center;
@@ -36,10 +42,30 @@
 .starFilled {
     color:  #00dfc3;
 }
-.starNotFilled {
+.anchorStar { 
+    display: block;
+    color: inherit;
+}
+.starColor{
+    color: inherit
+}
+.starColor:hover {
+    color: #00dfc3 !important;
+}
+.starsList {
+    display: flex;
     color: #999;
 }
+.starsList:hover {
+    color: #00dfc3
+}
 
+.starsList > li {
+    transition: color 500ms;
+}
+.starsList > li:hover ~ li {
+    color:  #999 !important;
+} 
 .navheader {
     width: 20%;
     display: flex;
