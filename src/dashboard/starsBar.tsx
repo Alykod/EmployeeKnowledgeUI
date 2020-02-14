@@ -3,6 +3,7 @@ import React from 'react';
 interface Stars {
     filled: number,
     name: String,
+    isDark?: boolean
 }
 
 
@@ -31,11 +32,11 @@ const StarBar = (props: Stars) => {
         }
 
         return (
-            <div className="skillStarBar field is-horizontal">
-                <div className="field-label is-normal">
-                <label className="label is-size-4 ">{props.name}:</label> 
+            <div className="skillStarBar field is-horizontal is-marginless is-paddingless">
+                <div className="field-label is-normal ">
+                <label className={props.isDark ? "label is-size-5" : "label is-size-5 has-text-white"}>{props.name}:</label> 
                 </div>
-                 <div className="field-body is-size-4">
+                 <div className="field-body is-size-5">
                  {handleStarFill(mappableStars)}
                 </div>
             </div>

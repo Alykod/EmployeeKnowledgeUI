@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/react-hooks';
-import { SignIn } from '../services/queries'
+import { SignIn, CreateNewUser } from '../services/queries'
 import { ApolloError } from 'apollo-boost'
 import { client } from '../services/apolloClient';
 
@@ -51,6 +51,29 @@ export const useLoginUser = async(email: String, password: String) => {
         localStorage.setItem("token", result.data.login.token);
         
         return result.data.login.userId
+    } catch (err) {
+        console.error(err)
+        return false
+    }
+}
+
+export const useSignUp = async(email: String, password: String, firstName: String, lastName: String, fullTimeEmployee: Boolean, city: String, state: String, country: String) => {
+    try {
+        let result = await client.mutate({
+            mutation: CreateNewUser,
+            variables: {
+                email: email,
+                password: password,
+                firstName,
+                lastName,
+                fullTimeEmployee,
+                city,
+                state,
+                country
+             }
+        })
+        localStorage.setItem("token", result.data.CreateUser.token);
+         return result.data.CreateUser.userId
     } catch (err) {
         console.error(err)
         return false

@@ -29,14 +29,20 @@ const UserProfile = () => {
         return (
             <div>
                 <section className="hero is-primary">
-                    <div className="hero-body">
-                        <div className="container">
-                            <h1 className="title">Welcome</h1> <h2 className="subtitle">{userData.firstName} {userData.lastName}</h2>
-                        </div>
+                    <div className="hero-body columns is-centered">
+                        {/* <div className="container columns is-centered"> */}
+                            <div className="column has-text-centered">
+                            <h1 className="title ">Welcome</h1> <h2 className="subtitle">{userData.firstName} <label className="has-text-black">{userData.lastName}</label></h2>
+                            </div>
+                            <div className="column has-text-centered">
+                            <label className="title">{userData.role.name} <span className="subtitle has-text-black">({userData.fullTimeEmployee ? "Full Time" : "Contractor"})</span></label>
+                            <label className="label">Based in <span className="subtitle">{userData.city},{userData.state},{userData.country}</span></label>
+                            </div>
+                        {/* </div> */}
                     </div>
                 </section>
                <section className="section columns">
-                   <div className="column">
+                   <div className="column columns">
                    {handleSkillsDisplay()}
                    </div>
                    <div className="column">
@@ -59,9 +65,15 @@ const UserProfile = () => {
                 <p>You don't have any skills added <i className="fas fa-frown"></i></p>
                 )
         } else {
-            return <div className="column is-offset-4"> {
+            return <div className="column is-offset-4 tile is-vertical"> {
             userData.skills.map((skill:any, index: number) => {
-                return <StarsBar key={index} name={skill.skill.name}  filled={skill.level}/>
+                return (
+                <article key ={`${skill.skill.name}+${skill.interest}`} className="tile is-child notification is-info has-text-white">
+                    <label className="title">{skill.skill.name}</label>
+                    <StarsBar key={`${index}level`} name="Knowledge"  filled={skill.level}/>
+                    <StarsBar key={`${index}interest`} name="Interest"  filled={skill.interest}/> 
+                </article>
+                )
             }) }
             </div>
         }

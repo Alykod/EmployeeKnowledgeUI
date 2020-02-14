@@ -14,6 +14,7 @@ const AddSkill = props => {
   const [availableSkills, setAvailableSkills] = useState([]);
   const [selectedSkill, setSelectedSkill] = useState("");
   const [level, setLevel] = useState(1);
+  const [interest, setInterest] = useState(1);
 
   useEffect(() => {
     if (data) {
@@ -23,6 +24,10 @@ const AddSkill = props => {
 
   const handleSkillValue = value => {
     setLevel(value);
+  };
+
+  const handleInterestValue = value => {
+    setInterest(value);
   };
 
   const handleAvailableSkills = () => {
@@ -42,16 +47,22 @@ const AddSkill = props => {
   const handleResetComponent = () => {
     props.refetchUser();
     setLevel(1);
+    setInterest(1);
     setSelectedSkill("");
-  }
+  };
 
   const handleSubmit = () => {
     if (selectedSkill !== "") {
       addSkill({
-        variables: { userId: userId, skillName: selectedSkill, level: level }
+        variables: {
+          userId: userId,
+          skillName: selectedSkill,
+          level: level,
+          interest: interest
+        }
       }).then(() => {
-          props.refetchUser();
-          handleResetComponent();
+        props.refetchUser();
+        handleResetComponent();
       });
     } else {
       alert("missing values");
@@ -60,40 +71,67 @@ const AddSkill = props => {
 
   const displayInput = () => {
     return (
-      <div className="field is-horizontal">
-        <div className="field-label is-normal">
-          <label className="label">Skill</label>
-        </div>
-        <div className="field-body is-grouped">
-          <div className="field is-narrow">
-            <div className="control">
-              <input
-                className="input is-danger"
-                list="AvailableSkills"
-                type="text"
-                placeholder="React, .Net core etc"
-                value={selectedSkill}
-                onChange={e => setSelectedSkill(e.target.value)}
-              />
-              <datalist id="AvailableSkills">
-                {availableSkills &&
-                  availableSkills.length > 0 &&
-                  handleListOfSkills()}
-              </datalist>
+      <>
+        <div className="form column rows is-offset-3">
+          <div className="field is-horizontal">
+            <div className="field-label is-normal">
+              <label className="label">Skill</label>
             </div>
-            <div className="control">
-              <StarSelector skillValue={handleSkillValue} level={level} />
+            <div className="field-body is-grouped">
+              <div className="field  is-narrow">
+                <div className="control">
+                  <input
+                    className="input is-danger"
+                    list="AvailableSkills"
+                    type="text"
+                    placeholder="React, .Net core etc"
+                    value={selectedSkill}
+                    onChange={e => setSelectedSkill(e.target.value)}
+                  />
+                  <datalist id="AvailableSkills">
+                    {availableSkills &&
+                      availableSkills.length > 0 &&
+                      handleListOfSkills()}
+                  </datalist>
+                </div>
+              </div>
             </div>
           </div>
-          <p className="field-body">
-            <button
-              className="button is-info"
-              onClick={() => handleSubmit(userId, selectedSkill, level)}>
-              Save
-            </button>
-          </p>
+          <div className="longerField field row">
+            <div className="field is-horizontal">
+              <div className="field-label is-normal">
+                <label className="label">Knowledge Level</label>
+              </div>
+              <div className="field-body">
+                <div className="field is-narrow">
+                  <StarSelector skillValue={handleSkillValue} level={level} />
+                </div>
+              </div>
+            </div>
+            <div className="longerField field is-horizontal">
+              <div className="field-label is-normal">
+                <label className="label">Interest Level</label>
+              </div>
+              <div className="field-body">
+                <StarSelector
+                  skillValue={handleInterestValue}
+                  level={interest}
+                />
+              </div>
+            </div>
+
+            <p className="field-body is-pulled-right">
+              <button
+                className="button is-info"
+                onClick={() =>
+                  handleSubmit(userId, selectedSkill, level, interest)
+                }>
+                Save
+              </button>
+            </p>
+          </div>
         </div>
-      </div>
+      </>
     );
   };
 

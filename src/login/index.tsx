@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { Card, CardHeader, CardHeaderTitle, CardContent, CardFooter, Field, Label, Control, Input, Button } from 'bloomer'
+import {  Button } from 'bloomer'
 import { useHandleSignIn, validateUserInfo, useLoginUser } from './service'
 import { client } from '../services/apolloClient';
 import { SignIn } from '../services/queries'
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import SignUp from './signUp';
 
 export default function Login() {
     const dispatch = useDispatch();
     const history = useHistory();
+    const [registration, setRegistration] = useState(false);
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
 
@@ -37,7 +39,7 @@ export default function Login() {
     return (
         <section className="hero is-fullheight ">
             <div className="hero-body">
-                <div className="container has-text-centered">
+                {!registration && <div className="container has-text-centered">
                     <div className="column is-4 is-offset-4">
                         <h3 className="title has-text-black">Login</h3>
                         <hr className="login-hr" />
@@ -61,46 +63,16 @@ export default function Login() {
                             </form>
                         </div>
                         <p className="has-text-grey">
-                            <a href="../">Sign Up</a> &nbsp;·&nbsp;
-                        <a href="../">Forgot Password</a> &nbsp;·&nbsp;
-                        <a href="../">Need Help?</a>
+                            <a href="SignUp" onClick={(e)=> {
+                                e.preventDefault();
+                                setRegistration(true);
+                            }}>Sign Up</a> &nbsp;·&nbsp;
+                            <a href="../">Forgot Password</a> &nbsp;·&nbsp;
                         </p>
                     </div>
-                </div>
+                </div>}
+                {registration && <SignUp />}
             </div>
         </section>
     )
 }
-
-
-{/* 
-<Card>
-            <CardHeader>
-                <CardHeaderTitle>
-                    Employee Skills Platform
-                </CardHeaderTitle>
-            </CardHeader>
-            <CardContent>
-            <Field>
-                <Label>
-                    Email
-                </Label>
-                <Control>
-                    <Input type="text" placeholder="Enter your email address" value={user} onChange={(event: any) => setUser((event.target as HTMLInputElement).value)}/>
-                </Control> 
-            </Field>
-            <Field>
-                <Label>
-                    Password
-                </Label>
-                <Control>
-                    <Input type="password" placeholder="Enter your Password" minLength={8} value={password} onChange={(event: any) => setPassword((event.target as HTMLInputElement).value)}/>
-                </Control>
-            </Field>
-            </CardContent>
-            <CardFooter>
-                <Button isColor="info" onClick={()=> handleLogin()}>
-                    Login
-                </Button>
-            </CardFooter>
-        </Card> */}

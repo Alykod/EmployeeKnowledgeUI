@@ -29,38 +29,43 @@ query UserById($userId: String!) {
         lastName
         skills{
             level
+            interest
             skill {
                 name
             }
         }
         _id
         email
+        country
+        state
+        city
+        available
+        fullTimeEmployee
+        role {
+          name
+        }
     }
 }
 `
 
 export const CreateUserSkill = gql `
-mutation CreateUserSkill($skillName : String!, $level: Int!, $userId: ID!) {
-    CreateUserSkill(skillName: $skillName, userId: $userId,  level: $level) {
+mutation CreateUserSkill($skillName : String!, $level: Int!, $userId: ID!, $interest: Int!) {
+    CreateUserSkill(skillName: $skillName, userId: $userId,  level: $level, interest: $interest) {
      _id
     }
   }
 `
-// export const GetUsersAndSkills = gql `
-// query {
-//     userSkills {
-//       _id,
-//       user {
-//         firstName,
-//         lastName,
-//         email
-//       }
-//       skill {
-//         name,
-//       }
-//       level,
-//     }
-//   }
+
+
+export const CreateNewUser = gql `
+mutation CreateUser($firstName : String!, $lastName: String!, $fullTimeEmployee: Boolean!, $email: String!, $password: String!, $country: String!, $city: String!, $state: String!) {
+  CreateUser(userInput: {firstName: $firstName, lastName: $lastName, fullTimeEmployee: $fullTimeEmployee, email: $email, password: $password, city: $city, state: $state, country: $country}) {
+    token
+    tokenExpiration
+    userId
+  }
+}
+`
 
 export const GetUsersAndSkills = gql `
 query {
@@ -73,6 +78,15 @@ query {
           name
         }    
         level
+        interest
+      }
+      city,
+      state,
+      country,
+      available,
+      fullTimeEmployee,
+      role {
+        name
       }
     }
   }`

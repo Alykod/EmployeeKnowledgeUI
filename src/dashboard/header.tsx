@@ -58,8 +58,8 @@ const Header = (props: any) => {
 
     const displayDropDown = () => {
         return (
-            <div className="navheader column is-full columns">
-            <label className="label column is-half">Skills</label>
+            <div className="navHeader column is-full columns">
+            <label className="label column is-one-quarter">Skills</label>
             <input className="input is-normal column is-half" list="availableSkills" value={selectedSkill} onChange={handleAutoComplete} placeholder="Filter by Skill"/>
             <datalist id="availableSkills">
                 {listOfSkills && listOfSkills.length > 0 && handleListOfSkills()}

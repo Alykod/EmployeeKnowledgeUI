@@ -42,7 +42,7 @@ const StarBar = props => {
   };
 
   return (
-    <div className="skillStarBar is-flexed">
+    <div className="skillStarBar is-flexed is-marginless">
       <ul className="starsList">{handleStarsDisplay(props.level)}</ul>
     </div>
   );
