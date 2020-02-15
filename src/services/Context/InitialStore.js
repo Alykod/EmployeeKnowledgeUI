@@ -4,7 +4,12 @@ const initialState = {
     user: null,
     token: null,
     skills: null,
-    selectedEmployee: {}
+    selectedEmployee: {},
+    employees: [],
+    listOfCountries: [],
+    listOfCities: [],
+    listOfRoles: [],
+    listOfSkills: []
 
 }
 
