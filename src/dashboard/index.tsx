@@ -1,33 +1,42 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {useSelector, useDispatch} from 'react-redux'
-import {GetSkills, GetUsersAndSkills} from '../services/queries'
+import React, { useState, useEffect, useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { GetSkills, GetUsersAndSkills } from '../services/queries'
 import UserCard from './card'
 import Header from './header'
 import './dashboard.scss'
-import {useQuery} from '@apollo/react-hooks'
+import { useQuery } from '@apollo/react-hooks'
 import UserDetails from './userDetails';
+import SideBar from './sideBar';
 
 
 
 const DashBoard = () => {
-    const {loading, error, data} = useQuery(GetUsersAndSkills);
-    const dispatch = useDispatch();
+    const { loading, error, data } = useQuery(GetUsersAndSkills);
+    // const dispatch = useDispatch();
     const [selectedSkill, setSelectedSkill] = useState<string>("");
     const [employees, setEmployees] = useState<any>();
     const [employeeSelected, setEmployeeSelected] = useState<any>();
     const [toggleEmployeeView, setToggleEmployeeView] = useState<boolean>(false)
-
-    useEffect(()=> {
-        if(selectedSkill == "" && data) {
+    const [filtering, setFiltering] = useState<boolean>(false)
+    const [toggleSideBar, setToggleSideBar] = useState(true)
+    useEffect(() => {
+        if (selectedSkill === "" && data) {
             setEmployees(data.users)
-        } else if(selectedSkill && data) {
-            handleUpdatedEmployeeList();
+        } else if (selectedSkill !== "" && data && filtering) {
+            handleUpdatedEmployeeList(employees);
+        } else if (data) {
+            setEmployees(data.users)
+            //potential race condition
+            handleUpdatedEmployeeList(data.users);
         }
     }, [selectedSkill])
 
+    const handleSideBarDisplay = (status: boolean) => {
+        setToggleSideBar(status)
+    }
 
-    useEffect(()=> {
-        if(data) {
+    useEffect(() => {
+        if (data) {
             setEmployees(data.users)
         }
     }, [data])
@@ -38,17 +47,17 @@ const DashBoard = () => {
     }
 
     const handleSkillsCard = () => {
-        return employees && employees.length > 0 && employees.map((user:any, index: number) => {
-            return <UserCard key={index} user={user} selectedSkill={selectedSkill} handleUserSelected={handleUserSelected}/>
+        return employees && employees.length > 0 && employees.map((user: any, index: number) => {
+            return <UserCard key={index} user={user} selectedSkill={selectedSkill} handleUserSelected={handleUserSelected} />
         })
     }
 
-    const handleUpdatedEmployeeList = () => {
+    const handleUpdatedEmployeeList = (employees: any) => {
         const newList = employees.filter((employee: any) => {
             let employeeSkills = employee.skills.find((skill: any) => skill.skill.name === selectedSkill)
-            if(employeeSkills) {
+            if (employeeSkills) {
                 return employee
-            } 
+            }
         })
         setEmployees(newList)
     }
@@ -58,22 +67,29 @@ const DashBoard = () => {
     }
 
     const handleDisplay = () => {
-        if(loading) {
+        if (loading) {
             return <p>Loading</p>
-        }else if(employees) {
-            return handleSkillsCard()
-        }else if(error) {
+        } else if (error) {
             return <p>error</p>
-        }
+        } else if (employees) {
+            return handleSkillsCard()
+        } else return <p>No Employees have the selected skills</p>
     }
 
-    return(
+    return (
         <>
-        <Header handleSelectedSkill={handleSelectedSkill}/>
-        {!toggleEmployeeView && <div className="CardsContainer">
-            {handleDisplay()}
-        </div>}
-        {toggleEmployeeView && <UserDetails user={employeeSelected}/>}
+            <Header handleSideBarDisplay={handleSideBarDisplay} />
+            <div className="columns">
+                {!toggleEmployeeView &&
+                    <>
+                        {toggleSideBar && <SideBar handleSelectedSkill={handleSelectedSkill} />}
+                        <div className="CardsContainer column">
+                            {handleDisplay()}
+                        </div>
+                    </>
+                }
+                {toggleEmployeeView && <UserDetails user={employeeSelected} />}
+            </div>
         </>
     )
 }
