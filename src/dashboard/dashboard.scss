@@ -9,7 +9,7 @@
 
 .cardOuter {
     width: 25vw;
-    height: 35vh;
+    height: 40vh;
     margin: 2em;
     @include for-phone-only {
         width: 100%;
@@ -22,7 +22,7 @@
 .cardSmall {
     cursor: pointer;
     width: 22vw;
-    height: 33vh;
+    height: 37vh;
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -48,6 +48,7 @@
     transition: box-shadow 0.3 ease-in-out;
 
 }
+
 
 datalist {
     background-color: red;

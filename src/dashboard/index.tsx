@@ -13,24 +13,14 @@ import {handleFilterValues} from './services'
 const DashBoard = () => {
     const { loading, error, data } = useQuery(GetUsersAndSkills);
     const dispatch = useDispatch();
-    const employeesList = useSelector((state: any) => state.employees)
-    const [selectedSkill, setSelectedSkill] = useState<string>("");
+    const employeesList = useSelector((state: any) => state.filteredEmployees)
+    const [selectedSkill, setSelectedSkill] = useState<[]>([]);
     const [employees, setEmployees] = useState<any>();
     const [employeeSelected, setEmployeeSelected] = useState<any>();
     const [toggleEmployeeView, setToggleEmployeeView] = useState<boolean>(false);
     const [filtering, setFiltering] = useState<boolean>(false);
     const [toggleSideBar, setToggleSideBar] = useState(true);
-    useEffect(() => {
-        if (selectedSkill === "" && data) {
-            setEmployees(data.users)
-        } else if (selectedSkill !== "" && data && filtering) {
-            handleUpdatedEmployeeList(employees);
-        } else if (data) {
-            setEmployees(data.users)
-            //potential race condition
-            handleUpdatedEmployeeList(data.users);
-        }
-    }, [selectedSkill])
+
 
     const handleSideBarDisplay = (status: boolean) => {
         setToggleSideBar(status)
@@ -56,21 +46,12 @@ const DashBoard = () => {
         })
     }
 
-    const handleUpdatedEmployeeList = (employees: any) => {
-        const newList = employees.filter((employee: any) => {
-            let employeeSkills = employee.skills.find((skill: any) => skill.skill.name === selectedSkill)
-            if (employeeSkills) {
-                return employee
-            }
-        })
-        setEmployees(newList)
-    }
-
-    const handleSelectedSkill = (skill: string) => {
-        setSelectedSkill(skill)
-    }
+    // const handleSelectedSkill = (skill: string) => {
+    //     setSelectedSkill(skill)
+    // }
     const handleFilter = (filterData: any) => {
-        console.log("filterData", filterData)
+        setSelectedSkill(filterData.skills)
+        dispatch({type: "FILTER_EMPLOYEES", payload: filterData});
     }
 
     const handleDisplay = () => {
@@ -83,13 +64,17 @@ const DashBoard = () => {
         } else return <p>No Employees have the selected skills</p>
     }
 
+    const handleToggleBack = () => {
+        setToggleEmployeeView(!toggleEmployeeView)
+    }
+
     return (
         <>
-            <Header handleSideBarDisplay={handleSideBarDisplay} />
+            <Header handleSideBarDisplay={handleSideBarDisplay} toggleBack={handleToggleBack} displayBackButton={toggleEmployeeView} />
             <div className="columns">
                 {!toggleEmployeeView &&
                     <>
-                        {toggleSideBar && <SideBar handleSelectedSkill={handleSelectedSkill} filter={handleFilter} />}
+                        {toggleSideBar && <SideBar filter={handleFilter} />}
                         <div className="CardsContainer column">
                             {handleDisplay()}
                         </div>

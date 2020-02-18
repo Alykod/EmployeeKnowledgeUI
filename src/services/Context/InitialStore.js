@@ -6,6 +6,7 @@ const initialState = {
     skills: null,
     selectedEmployee: {},
     employees: [],
+    filteredEmployees: [],
     listOfCountries: [],
     listOfCities: [],
     listOfRoles: [],

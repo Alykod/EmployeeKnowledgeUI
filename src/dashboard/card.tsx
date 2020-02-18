@@ -1,5 +1,7 @@
 import React from 'react';
 import StarsBar from './starsBar'
+import _ from 'lodash';
+
 interface UserProps {
     _id: String,
     user: User,
@@ -8,7 +10,7 @@ interface UserProps {
 
 interface Props {
     user: User,
-    selectedSkill?: String | null,
+    selectedSkill: any, 
     handleUserSelected(user: User): void
 }
 
@@ -40,10 +42,10 @@ const UserCard = (props:Props) => {
 
 
     const handleSelectedSkill = () => {
-        const skillSelected = user.skills.find(skill => skill && skill.skill.name === selectedSkill);
-        if(skillSelected){
-            return (<StarsBar isDark={true} name={skillSelected.skill.name} filled={skillSelected.level}/>)
-    } else return null;
+        let userSkills = user.skills.map((skill: Skill) => skill.skill.name);
+        return user.skills.map((skillValue: Skill) => {
+           return selectedSkill.includes(skillValue.skill.name) ?  <div className="row is-full"><StarsBar isDark={true} name={skillValue.skill.name} filled={skillValue.level}/></div>: null
+        })
     }
 
     return (
@@ -57,7 +59,8 @@ const UserCard = (props:Props) => {
              <div className="card-header">
                 <p className="card-header-title is-centered is-size-4">{user.firstName} {user.lastName}</p>
                 </div>
-            <div className="card-content columns"> 
+            <div className="card-content rows">
+                <div className="row columns"> 
               <div className="column rows">
                 <p>{user.email}</p>
                 <p>{user.state} {user.country}</p>
@@ -65,10 +68,11 @@ const UserCard = (props:Props) => {
               <div className="column">
               <p>{user.fullTimeEmployee ? "Full Time": "Contractor"}</p>
                 </div>         
-            </div>
-            {selectedSkill && <div className="card-footer is-flexed has-text-black" style={{justifyContent: "center"}}>
+                </div>
+            {selectedSkill.length > 0 && <div className="row">
                 {handleSelectedSkill()}
             </div>}
+            </div>
             {/* </a> */}
         </div>
         </div>

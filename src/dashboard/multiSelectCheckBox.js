@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useState, useEffect } from "react";
+import _ from 'lodash'
 
 const MultiSelect = props => {
   const [selectedValue, setSelectedValue] = useState([]);
@@ -19,8 +20,10 @@ const MultiSelect = props => {
   }, [props.data]);
 
   function handleChecked(value) {
-    if (selectedValue.includes(value)) {
-      let updatedValue = selectedValue.splice(selectedValue.indexOf(value));
+    if (selectedValue.includes(value)) {    
+    let updatedValue =  _.remove(selectedValue, (arrayValue)=> {
+        return arrayValue !== value;
+    })
       setSelectedValue(updatedValue);
       props.handleData(updatedValue);
     } else {

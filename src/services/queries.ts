@@ -56,6 +56,14 @@ mutation CreateUserSkill($skillName : String!, $level: Int!, $userId: ID!, $inte
   }
 `
 
+export const ChangeUserAvailability = gql `
+mutation ChangeUserAvailability($userId: ID! $available: Boolean!) {
+  ChangeUserAvailability(userId: $userId, available: $available) {
+    _id
+  }
+}
+`
+
 
 export const CreateNewUser = gql `
 mutation CreateUser($firstName : String!, $lastName: String!, $fullTimeEmployee: Boolean!, $email: String!, $password: String!, $country: String!, $city: String!, $state: String!) {
@@ -70,6 +78,7 @@ mutation CreateUser($firstName : String!, $lastName: String!, $fullTimeEmployee:
 export const GetUsersAndSkills = gql `
 query {
     users {
+      _id,
       firstName,
       lastName,
       email,

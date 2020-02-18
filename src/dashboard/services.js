@@ -16,8 +16,3 @@ export const handleFilterValues = data => {
 
   return { cities, countries, roles };
 };
-
-
-export const useFilter = (filterData) => {
-
-}

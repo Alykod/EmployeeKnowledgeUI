@@ -12,7 +12,7 @@ const SideBar = (props: any) => {
     const listOfCountries = useSelector((state: any) => state.listOfCountries)
     const listOfCities = useSelector((state: any) => state.listOfCities)
     const listOfRoles = useSelector((state: any) => state.listOfRoles)
-    const [available, setAvailable] = useState(null);
+    const [available, setAvailable] = useState(true);
     const [fullTimeEmployee, setFullTimeEmployee] = useState(true);
     const [rolesSelected, setRolesSelected] = useState([]);
     const [citiesSelected, setCitiesSelected] = useState([]);
@@ -20,6 +20,7 @@ const SideBar = (props: any) => {
     const [sideBarActive, setSideBarActive] = useState(false);
     const [listOfSkills, setListOfSkills] = useState<Skill[]>([]);
     const [skillsSelected, setSkillsSelected] = useState([]);
+    const [initialRender, setInitialRender] = useState(true);
 
 
     useEffect(() => {
@@ -28,80 +29,133 @@ const SideBar = (props: any) => {
         }
     }, [skills])
 
-    useEffect(() => {
-        props.filter({
-            "skills": skillsSelected,
-            "countries": countriesSelected,
-            "cities": citiesSelected,
-            "roles": rolesSelected,
-            "available": available
-        })
-    }, [skillsSelected, countriesSelected, citiesSelected, rolesSelected, available])
+    // useEffect(() => {
+    //     if(initialRender) {
+    //         setInitialRender(false);
+    //     } else {
+    //         props.filter({
+    //             "skills": skillsSelected,
+    //             "countries": countriesSelected,
+    //             "cities": citiesSelected,
+    //             "roles": rolesSelected,
+    //             "available": available,
+    //             "fullTimeEmployee": fullTimeEmployee
+    //         })
+    //     }
+       
+    // }, [skillsSelected, countriesSelected, citiesSelected, rolesSelected, available, fullTimeEmployee])
 
-    const handleSelect = (value: any) => {
-        props.handleSelectedSkill(value);
+    // const handleSelect = (value: any) => {
+    //     props.handleSelectedSkill(value);
+    // }
+
+    // const displayDropDown = () => {
+    //     return (
+    //         <div className="row is-full">
+    //             <Dropdown data={listOfSkills} label="Skills" handleSelectedItem={handleSelect} />
+    //         </div>
+    //     )
+    // }
+
+    const rolesDropDown = (roles: any) => {
+        setRolesSelected(roles);
     }
 
-    const displayDropDown = () => {
-        return (
-            <div className="row is-full">
-                <Dropdown data={listOfSkills} label="Skills" handleSelectedItem={handleSelect} />
-            </div>
-        )
-    }
-
-    const rolesDropDown = () => {
-
-    }
-
-    const handleMultiSelectData = () => {
-        const data = skills.skills.map((skill: any) => skill.name);
-        return data
-    }
+    // const handleMultiSelectData = () => {
+    //     const data = skills.skills.map((skill: any) => skill.name);
+    //     return data
+    // }
 
     const handleSkillsSelected = (data: any) => {
         setSkillsSelected(data);
     }
 
-    const hanldeCountrySelected = (data: any) => {
-        console.log(data)
+    const handleCountrySelected = (data: any) => {
+        setCountriesSelected(data)
+    }
+
+    const handleCitiesSelected = (cities: any) => {
+        setCitiesSelected(cities)
+    }
+
+    const handleRolesSelected = (roles: any) => {
+        setRolesSelected(roles)
+    }
+    const handleEmployeeStatus = (isFullTime:boolean) => {
+        setFullTimeEmployee(isFullTime)
+    }
+
+    const handleSubmitFilter = () => {
+        props.filter({
+            "skills": skillsSelected,
+            "countries": countriesSelected,
+            "cities": citiesSelected,
+            "roles": rolesSelected,
+            "available": available,
+            "fullTimeEmployee": fullTimeEmployee
+        })  
     }
 
     return (
         <div className="column is-2">
-            <aside className="menu rows">
+            <aside className="menu rows has-text-centered">
                 <h1 className="is-size-2">Filtering Bar</h1>
-                {/* {displayDropDown()} */}
-                {/* <div className="row is-full rows">
-                    <div className="card has-background-warning">
-                        <div className="control">
-                            <label className="checkbox">
-                                <input type="checkbox" name="fullTimeEmployment" checked={fullTimeEmployee ? true : false} onChange={(e) => {
-                                    setFullTimeEmployee(true)
-                                }} />
-                                Full Time
-                   </label>
-                            <label className="checkbox">
-                                <input type="checkbox" name="contractor" checked={fullTimeEmployee ? false : true} onChange={(e) => {
-                                    setFullTimeEmployee(false)
-                                }} />
-                                Contractor
-                   </label>
-                        </div>
-                    </div>
-                </div> */}
+                <br/>
                 <div className="row is-full">
                     {skills && <MultiSelect data={skills.skills} label="Skills" handleData={handleSkillsSelected} />}
-                    {/* <p>Roles will go here as check boxes</p> */}
                 </div>
                 <div className="row is-full">
-                    {listOfCountries && <MultiSelect data={listOfCountries} label="Countries" handleData={hanldeCountrySelected} />}
+                    {listOfCountries && <MultiSelect data={listOfCountries} label="Countries" handleData={handleCountrySelected} />}
                 </div>
                 <div className="row is-full">
-                    {listOfCities && <MultiSelect data={listOfCities} label="Cities" handleData={hanldeCountrySelected} />}
+                    {listOfCities && <MultiSelect data={listOfCities} label="Cities" handleData={handleCitiesSelected} />}
                 </div>
                 <div className="row is-full">
-                    {listOfRoles && <MultiSelect data={listOfRoles} label="Roles" handleData={hanldeCountrySelected} />}
+                    {listOfRoles && <MultiSelect data={listOfRoles} label="Roles" handleData={handleRolesSelected} />}
+                </div>
+                <div className="row is-full">
+                    <div className="form columns">
+                        <label className="label column is-half">
+                            <input type="radio" value="fullTimeEmployee" checked={fullTimeEmployee} onChange={(e)=> {
+                                handleEmployeeStatus(true);
+                            }}/>
+                            Full Time Employee
+                        </label>
+                        <label className="label column is-half">
+                            <input type="radio" value="contractor" checked={!fullTimeEmployee} onChange={(e)=> {
+                                handleEmployeeStatus(false);
+                            }}/>
+                            Contractor
+                        </label>
+                    </div>
+                    <hr className="has-background-black"></hr>
+                </div>
+                <br/>
+                <div className="row is-full">
+                    <div className="form columns">
+                        <label className="label column is-half">
+                            <input type="radio" value="available" checked={available} onChange={(e)=> {
+                                setAvailable(true)
+                            }}/>
+                            Available
+                        </label>
+                        <label className="label column is-half">
+                            <input type="radio" value="notAvailable" checked={!available} onChange={(e)=> {
+                                setAvailable(false)
+                                } }/>
+                            Not Available
+                        </label>
+                    </div>
+                    <hr className="has-background-black"></hr>
+                </div>
+                <br/>
+                <div className="row is-full">
+                    <button className="button is-primary" onClick={(e)=> {
+                        e.preventDefault();
+                        handleSubmitFilter()
+                    }}>
+                        Filter
+                    </button>
                 </div>
             </aside>
         </div>
