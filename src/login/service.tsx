@@ -57,7 +57,7 @@ export const useLoginUser = async(email: String, password: String) => {
     }
 }
 
-export const useSignUp = async(email: String, password: String, firstName: String, lastName: String, fullTimeEmployee: Boolean, city: String, state: String, country: String) => {
+export const useSignUp = async(email: String, password: String, firstName: String, lastName: String, fullTimeEmployee: Boolean, city: String, state: String, country: String, role: String) => {
     try {
         let result = await client.mutate({
             mutation: CreateNewUser,
@@ -69,7 +69,8 @@ export const useSignUp = async(email: String, password: String, firstName: Strin
                 fullTimeEmployee,
                 city,
                 state,
-                country
+                country, 
+                role
              }
         })
         localStorage.setItem("token", result.data.CreateUser.token);

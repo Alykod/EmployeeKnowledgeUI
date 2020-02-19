@@ -3,7 +3,9 @@ import React from 'react';
 interface Props {
     handleInputChange: (value: boolean, type: any)=> void,
     value: boolean,
-    type: any
+    type: any,
+    firstValue: string,
+    secondValue: string
 }
 
 const RadioSelector = (props: Props) => {
@@ -16,12 +18,12 @@ const RadioSelector = (props: Props) => {
                 </label>
                 <div className="control">
                     <label className="radio">
-                        <input type="radio" style={{margin: '.5em'}} name="employmentStatus" checked={props.value === true} onChange={() => {props.handleInputChange(true, props.type)}}/>
-                        Full Time
+                        <input type="radio" style={{margin: '.5em'}} name={props.firstValue} checked={props.value === true} onChange={() => {props.handleInputChange(true, props.type)}}/>
+                        {props.firstValue}
                     </label>
                     <label className="radio">
-                        <input type="radio" style={{margin: '.5em'}}name="employmentStatus" checked={props.value === false} onChange={() => {props.handleInputChange(false, props.type)}}/>
-                        Contractor
+                        <input type="radio" style={{margin: '.5em'}} name={props.secondValue} checked={props.value === false} onChange={() => {props.handleInputChange(false, props.type)}}/>
+                       {props.secondValue}
                     </label>
                 </div>
             </div>   
