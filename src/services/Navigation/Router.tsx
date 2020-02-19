@@ -27,7 +27,7 @@ const isAuth = ()  => {
             localStorage.removeItem("token");
             return false
         } else {
-            return true
+            return decoded
         }
     }
     
@@ -36,10 +36,26 @@ const isAuth = ()  => {
 
 const handleAuthRoute = (Component: React.FC) => {
     let handleAuth = isAuth();
-    return (handleAuth ? <Component /> : <Redirect to="/"/>)
+    if(!handleAuth) {
+        return <Login/>
+    } else {
+        if(handleAuth.role === "Admin") {
+            return <Component/>
+        } else {
+            return <MyAccount/>
+        }
+    }
+    // return (handleAuth ? <Component /> : <Redirect to="/"/>)
 }
 
-
+const handleReRoute = () => {
+    let isUserAuth = isAuth();
+    if(!isUserAuth) {
+        return <Login/>
+    }  else {
+        return <MyAccount />
+    }
+}
 
 
 const Navigation = () => {
@@ -56,6 +72,7 @@ const Navigation = () => {
                 <Route path="/myaccount" history={history}>
                     {handleAuthRoute(MyAccount)}
                 </Route>
+                <Route render={() => handleReRoute()} />
             </Switch>
         </Router>
     )

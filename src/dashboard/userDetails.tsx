@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import StarsBar from './starsBar'
-import { useMutation } from '@apollo/react-hooks'
-import { ChangeUserAvailability } from '../services/queries'
+import { useMutation, useQuery } from '@apollo/react-hooks'
+import {useSelector} from 'react-redux';
+import { ChangeUserAvailability, GetRoles } from '../services/queries'
+import SearchDropDown from './searchDropDown'
 interface UserProps {
     _id: string,
     user: User,
@@ -37,9 +39,14 @@ interface Skill {
 
 const UserDetails = (props: Props) => {
     const { user } = props;
+    const {data: roles, loading, error} = useQuery(GetRoles)
+    console.log(roles)
     const [userAvailability, setUserAvailability] = useState(user.available)
     const [toggleUserAvailability, setToggleUserAvailability] = useState(false);
-    const [changeUserAvailability] = useMutation(ChangeUserAvailability)
+    const [changeUserAvailability] = useMutation(ChangeUserAvailability);
+    // const [changeUserAvailability] = useMutation(ChangeUserAvailability);
+    const [toggleUserRole, setToggleUserRole] = useState(false);
+    const [userRole, setUserRole] = useState(user.role.name)
     // const handleSkillsDisplay = () => {
     //     if (user.skills.length === 0) {
     //         return (
@@ -58,7 +65,7 @@ const UserDetails = (props: Props) => {
     const handleSkillsDisplay = () => {
         if (user.skills.length === 0) {
             return (
-                <p>You don't have any skills added <i className="fas fa-frown"></i></p>
+                <p>User does not have any skills added. <i className="fas fa-frown"></i></p>
             )
         } else {
             return <div className="column tile is-vertical"> {
@@ -80,7 +87,6 @@ const UserDetails = (props: Props) => {
             return setToggleUserAvailability(false);
         }
         else {
-            debugger;
             changeUserAvailability({
                 variables: {
                     userId: user._id,
@@ -95,6 +101,26 @@ const UserDetails = (props: Props) => {
         }
     }
 
+    const handleUserRoleChange = ()=> {
+        if(user.role.name === userRole) {
+            setUserRole(user.role.name);
+            return setToggleUserRole(false);
+        }
+        else {
+            changeUserAvailability({
+                variables: {
+                    userId: user._id,
+                    role: userRole
+                }
+            }).then(() => {
+                setToggleUserRole(false);
+                alert("User Role Successfully Changed")
+            }).catch((err) => {
+                alert("Error Changing")
+            })
+        }
+    }
+
 
     const handlePreference = () => {
         return user.skills.map((skill: any, index: any)=> {
@@ -103,6 +129,10 @@ const UserDetails = (props: Props) => {
             } 
             else return null;
         })
+    }
+
+    const handleSelectedRole = (value:any) => {
+        setUserRole(value)
     }
 
     return (
@@ -147,7 +177,7 @@ const UserDetails = (props: Props) => {
                                 </div>
                                 <div className="column field is-grouped">
                                     <p className="control">
-                                        <button onClick={handleChangeUserAvailability} className="button is-primary">
+                                        <button onClick={handleUserRoleChange} className="button is-primary">
                                             Submit
                             </button>
                                     </p>
@@ -163,13 +193,42 @@ const UserDetails = (props: Props) => {
                             </div>
                         </article>}
                         <br />
-                        <div className="tile is-child notification is-info">
-                            <p className="title"><span className="subtitle">{user.firstName} is a </span>{user.fullTimeEmployee ? "Full Time" : "Contractor"} {user.role.name} </p>
+                       {!toggleUserRole && 
+                       <a href="RoleTile" className="has-tooltip-bottom" data-tooltip="Click on this card to change employee's role and their employment status" onClick={(e) => {
+                        e.preventDefault();
+                        setToggleUserRole(true)
+                    }}>
+                       <div className="tile is-child notification is-info">
+                            <p className="title"><span className="subtitle">{user.firstName} is a </span>{user.fullTimeEmployee ? "Full Time" : "Contractor"} {userRole} </p>
                             {/* <p className="title">and is </p> */}
-                        </div>
+                                    </div> </a>}
+                                    <br/>
+                        {toggleUserRole && <article className="tile is-child notification is-white rows">
+                            <p className="title row">Change User Role</p>
+                            <div className="row column">
+                                <div className="field column columns">
+                                    <label className="label column">{user.firstName} {user.lastName} {userRole}</label> <SearchDropDown label="Role" data={roles.roles} handleSelectedItem={handleSelectedRole}/>
+                                </div>
+                                <div className="column field is-grouped">
+                                    <p className="control">
+                                        <button onClick={handleUserRoleChange} className="button is-primary">
+                                            Submit
+                            </button>
+                                    </p>
+                                    <p className="control">
+                                        <button onClick={() => {
+                                            setUserRole(user.role.name);
+                                            setToggleUserRole(false);
+                                        }} className="button is-warning">
+                                            Cancel
+                            </button>
+                                    </p>
+                                </div>
+                            </div>
+                        </article>}
                         <div className="tile is-child notification is-primary">
                             <p className="title"><span className="subtitle">Based in </span> {user.city}, {user.state}, {user.country}</p>
-                        </div>
+                        </div> 
                         <div className="tile is-child notification is-info">
                             <p className="title">
                                     {user.firstName} <span className="subtitle">prefers to work with </span>{handlePreference()}
