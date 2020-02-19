@@ -1,6 +1,7 @@
 {
   "name": "employeedashboard",
   "version": "0.1.0",
+  "homepage": "http://alykod.github.io/employeedashboardUI",
   "private": true,
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",
