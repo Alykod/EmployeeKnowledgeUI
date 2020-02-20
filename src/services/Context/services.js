@@ -3,12 +3,12 @@ import _ from 'lodash';
 export const handleFilterEmployees = (allEmployees, filteringValues) => {
   let employees = allEmployees.filter((employee) => {
     let filterCities = filteringCities(employee, filteringValues);
-    let filterCountries = filteringCountries(employee, filteringValues);
+    // let filterCountries = filteringCountries(employee, filteringValues);
     let filterSkills = filteringSkills(employee, filteringValues);
     let filterRoles = filteringRoles(employee, filteringValues);
     let filterFullTimeEmployee = employee.fullTimeEmployee === filteringValues.fullTimeEmployee 
     let filterAvailable = employee.available === filteringValues.available
-    if(filterCities && filterCountries && filterSkills && filterRoles && filterFullTimeEmployee & filterAvailable) {
+    if(filterCities && filterSkills && filterRoles && filterFullTimeEmployee & filterAvailable) {
       return true;
     } else {
       return false;
@@ -26,9 +26,9 @@ const filteringCities = (employee, filteringValues) => {
     return filteringValues.cities.length === 0 ? true : filteringValues.cities.includes(employee.city);
   }
 
-  const filteringCountries = (employee, filteringValues) => {
-    return filteringValues.countries.length === 0 ? true : filteringValues.countries.includes(employee.country);
-  }
+  // const filteringCountries = (employee, filteringValues) => {
+  //   return filteringValues.countries.length === 0 ? true : filteringValues.countries.includes(employee.country);
+  // }
   const filteringSkills = (employee, filteringValues) => {
     let employeeSkills = employee.skills.map((skill) => skill.skill.name);
     if(filteringValues.skills.length === 0) {

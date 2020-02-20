@@ -36,7 +36,7 @@ const UserProfile = () => {
                             </div>
                             <div className="column has-text-centered">
                             <label className="title">{userData.role.name} <span className="subtitle has-text-black">({userData.fullTimeEmployee ? "Full Time" : "Contractor"})</span></label>
-                            <label className="label">Based in <span className="subtitle">{userData.city},{userData.state},{userData.country}</span></label>
+                            <label className="label">Based in <span className="subtitle">{userData.city},{userData.state}</span></label>
                             </div>
                         {/* </div> */}
                     </div>

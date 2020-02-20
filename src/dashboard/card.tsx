@@ -19,7 +19,7 @@ interface User {
     lastName: String,
     email: String
     skills: Skill[];
-    country: string
+    // country: string
     city: string
     state: string
     fullTimeEmployee: boolean
@@ -63,7 +63,7 @@ const UserCard = (props:Props) => {
                 <div className="row columns"> 
               <div className="column rows">
                 <p>{user.email}</p>
-                <p>{user.state} {user.country}</p>
+                    <p>{user.city} {user.state}</p>
               </div>    
               <div className="column">
               <p>{user.fullTimeEmployee ? "Full Time": "Contractor"}</p>

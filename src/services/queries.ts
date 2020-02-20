@@ -36,7 +36,6 @@ query UserById($userId: String!) {
         }
         _id
         email
-        country
         state
         city
         available
@@ -66,8 +65,8 @@ mutation ChangeUserAvailability($userId: ID! $available: Boolean, $role: String,
 
 
 export const CreateNewUser = gql `
-mutation CreateUser($firstName : String!, $lastName: String!, $fullTimeEmployee: Boolean!, $email: String!, $password: String!, $country: String!, $city: String!, $state: String!, $role: String!) {
-  CreateUser(userInput: {firstName: $firstName, lastName: $lastName, fullTimeEmployee: $fullTimeEmployee, email: $email, password: $password, city: $city, state: $state, country: $country, role: $role}) {
+mutation CreateUser($firstName : String!, $lastName: String!, $fullTimeEmployee: Boolean!, $email: String!, $password: String!,  $city: String!, $state: String!, $role: String!) {
+  CreateUser(userInput: {firstName: $firstName, lastName: $lastName, fullTimeEmployee: $fullTimeEmployee, email: $email, password: $password, city: $city, state: $state, role: $role}) {
     token
     tokenExpiration
     userId
@@ -99,7 +98,6 @@ query {
       }
       city,
       state,
-      country,
       available,
       fullTimeEmployee,
       role {

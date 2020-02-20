@@ -70,9 +70,9 @@ const SideBar = (props: any) => {
         setSkillsSelected(data);
     }
 
-    const handleCountrySelected = (data: any) => {
-        setCountriesSelected(data)
-    }
+    // const handleCountrySelected = (data: any) => {
+    //     setCountriesSelected(data)
+    // }
 
     const handleCitiesSelected = (cities: any) => {
         setCitiesSelected(cities)
@@ -104,9 +104,9 @@ const SideBar = (props: any) => {
                 <div className="row is-full">
                     {skills && <MultiSelect data={skills.skills} label="Skills" handleData={handleSkillsSelected} />}
                 </div>
-                <div className="row is-full">
+                {/* <div className="row is-full">
                     {listOfCountries && <MultiSelect data={listOfCountries} label="Countries" handleData={handleCountrySelected} />}
-                </div>
+                </div> */}
                 <div className="row is-full">
                     {listOfCities && <MultiSelect data={listOfCities} label="Cities" handleData={handleCitiesSelected} />}
                 </div>

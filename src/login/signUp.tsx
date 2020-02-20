@@ -12,7 +12,7 @@ const SignUp = () => {
     const [password, setPassword] = useState("");
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
-    const [country, setCountry] = useState("");
+    // const [country, setCountry] = useState("");
     const [fullTimeEmployee, setFullTimeEmployee] = useState(true);
     const [role, setRole] = useState(false)
     const [roleName, setRoleName] = useState("");
@@ -47,7 +47,7 @@ const SignUp = () => {
     }
 
     async function HandleLogin() {
-        const signup = await useSignUp(email, password, firstName, lastName, fullTimeEmployee ,city, state, country, roleName);
+        const signup = await useSignUp(email, password, firstName, lastName, fullTimeEmployee ,city, state, roleName);
         if(signup) {
             HandleDispatchUser(signup);
        }
@@ -69,7 +69,7 @@ const SignUp = () => {
                 <Field title="Last Name" value={lastName} type={setLastName} handleInputChange={handleValueChange}/>
                 <Field title="City" value={city} type={setCity} handleInputChange={handleValueChange}/>
                 <Field title="State" value={state} type={setState} handleInputChange={handleValueChange}/>
-                <Field title="Country" value={country} type={setCountry} handleInputChange={handleValueChange}/>
+                {/* <Field title="Country" value={country} type={setCountry} handleInputChange={handleValueChange}/> */}
                 <RadioSelector value={fullTimeEmployee} type={setFullTimeEmployee} handleInputChange={handleValueChange} firstValue="Full Time" secondValue="Contractor"/>
                 <RadioSelector value={role} type={setRole} handleInputChange={handleRoleChange} firstValue="TPS" secondValue="Employee"/>
                 <div className="column">

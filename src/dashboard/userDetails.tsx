@@ -20,7 +20,7 @@ interface User {
     lastName: string,
     email: string,
     skills: Skill[];
-    country: string,
+    // country: string,
     city: string,
     state: string,
     available: boolean,
@@ -227,7 +227,7 @@ const UserDetails = (props: Props) => {
                             </div>
                         </article>}
                         <div className="tile is-child notification is-primary">
-                            <p className="title"><span className="subtitle">Based in </span> {user.city}, {user.state}, {user.country}</p>
+                            <p className="title"><span className="subtitle">Based in </span> {user.city}, {user.state}</p>
                         </div> 
                         <div className="tile is-child notification is-info">
                             <p className="title">
