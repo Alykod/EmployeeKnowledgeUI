@@ -15,6 +15,8 @@ import { createBrowserHistory } from "history";
 
 import JwtDecode from 'jwt-decode'
 
+const history = createBrowserHistory();
+
 
 const isAuth = ()  => {
     const token: string | null = localStorage.getItem("token");
@@ -33,46 +35,39 @@ const isAuth = ()  => {
     
 }
 
-
-const handleAuthRoute = (Component: React.FC) => {
-    let handleAuth = isAuth();
-    if(!handleAuth) {
-        return <Login/>
-    } else {
-        if(handleAuth.role === "Admin") {
-            return <Component/>
-        } else {
-            return <MyAccount/>
-        }
-    }
-    // return (handleAuth ? <Component /> : <Redirect to="/"/>)
+const PrivateRoute = ({component, path, history}:{component: React.FC; history: any; path: string}) => {
+    const handleAuth = isAuth();
+    const finalComponent = handleAuth ? component : Login;
+    return <Route history={history} path={path} component={finalComponent} />
 }
 
-const handleReRoute = () => {
-    let isUserAuth = isAuth();
-    if(!isUserAuth) {
-        return <Login/>
-    }  else {
-        return <MyAccount />
-    }
-}
+
+// const handleAuthRoute = (Component: React.FC) => {
+//     debugger;
+//     let handleAuth = isAuth();
+//     if(!handleAuth) {
+//         history.push("/")
+//         return <Login />
+//     } else {
+//         if(handleAuth.role === "Admin") {
+//             return <Component/>
+//         } else {
+//             return <MyAccount/>
+//         }
+//     }
+//     // return (handleAuth ? <Component /> : <Redirect to="/"/>)
+// }
 
 
 const Navigation = () => {
-    const history = createBrowserHistory();
     return (
         <Router>
             <Switch>
-                <Route exact path="/" history={history}>
-                    <Login />
-                </Route>
-                <Route path="/dashboard" history={history}>
-                    {handleAuthRoute(Dashboard)}
-                </Route>
-                <Route path="/myaccount" history={history}>
-                    {handleAuthRoute(MyAccount)}
-                </Route>
-                <Route render={() => handleReRoute()} />
+                <Route exact path="/" history={history} component={Login} />
+                <PrivateRoute path="/Dashboard" history={history} component={Dashboard}/>
+                <PrivateRoute path="/MyAccount" history={history} component={MyAccount}/>
+                    
+                {/* <Route render={() => handleReRoute()} /> */}
             </Switch>
         </Router>
     )

@@ -23,7 +23,6 @@ const SignUp = () => {
         type(value);
     }
     const handleRoleChange = (value: boolean, type: any) => {
-        debugger;
         let role = ""
         if(value == true) {
             role = "Admin"
@@ -50,6 +49,8 @@ const SignUp = () => {
         const signup = await useSignUp(email, password, firstName, lastName, fullTimeEmployee ,city, state, roleName);
         if(signup) {
             HandleDispatchUser(signup);
+       } else {
+           alert("Error Signing up. Please try again");
        }
     }
 

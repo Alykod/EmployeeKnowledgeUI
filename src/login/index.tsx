@@ -24,13 +24,13 @@ export default function Login() {
     }
     function HandleDispatchUser(userId: string) {
         dispatch({ type: "USER_DETAILS", payload: userId })
-        history.push("/myaccount");
+        return history.push("/MyAccount");
     }
 
     async function HandleLogin() {
-        const loginer = await useLoginUser(user, password);
-        if (loginer) {
-            HandleDispatchUser(loginer)
+        const loginHandler = await useLoginUser(user, password);
+        if (loginHandler) {
+            HandleDispatchUser(loginHandler)
         } else {
             alert("invalid user")
         }

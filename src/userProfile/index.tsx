@@ -6,11 +6,12 @@ import { useHistory } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks'
 import StarsBar from '../dashboard/starsBar'
 import AddSkill from './addSkill'
+import Header from '../dashboard/header';
 
 const UserProfile = () => {
     const history = useHistory();
     const userId = useSelector((state: any) => state.user);
-    const [userData, setUserData] = useState<any>({})
+    const [userData, setUserData] = useState<any>(null)
     if (!userId) {
         history.push("/")
     }
@@ -27,6 +28,8 @@ const UserProfile = () => {
     const userDisplay = () => {
         console.log(userData)
         return (
+            <>
+            <Header myAccount={true} isAdmin={userData.role.name === "Admin" ? true : false}/>
             <div>
                 <section className="hero is-primary">
                     <div className="hero-body columns is-centered">
@@ -50,6 +53,7 @@ const UserProfile = () => {
                    </div>
                 </section>
             </div>
+            </>
         )
     }
 

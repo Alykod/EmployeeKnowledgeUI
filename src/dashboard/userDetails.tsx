@@ -177,7 +177,7 @@ const UserDetails = (props: Props) => {
                                 </div>
                                 <div className="column field is-grouped">
                                     <p className="control">
-                                        <button onClick={handleUserRoleChange} className="button is-primary">
+                                        <button onClick={handleChangeUserAvailability} className="button is-primary">
                                             Submit
                             </button>
                                     </p>
