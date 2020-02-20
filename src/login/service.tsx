@@ -52,7 +52,7 @@ export const useLoginUser = async(email: String, password: String) => {
         
         return result.data.login.userId
     } catch (err) {
-        console.error(err)
+        console.log(err)
         return false
     }
 }
