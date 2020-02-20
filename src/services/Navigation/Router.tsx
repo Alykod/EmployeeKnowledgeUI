@@ -37,7 +37,13 @@ const isAuth = ()  => {
 
 const PrivateRoute = ({component, path, history}:{component: React.FC; history: any; path: string}) => {
     const handleAuth = isAuth();
-    const finalComponent = handleAuth ? component : Login;
+    let finalComponent;
+    if(handleAuth) {
+        let role = handleAuth.role;
+        if(role !== "Admin") {
+           finalComponent = MyAccount;
+        }  else finalComponent = component;   
+    } else finalComponent = Login
     return <Route history={history} path={path} component={finalComponent} />
 }
 
