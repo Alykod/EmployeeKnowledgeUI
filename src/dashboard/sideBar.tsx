@@ -157,7 +157,7 @@ const SideBar = (props: any) => {
                     <div className="row is-full">
                         <div className="field is-horizontal">
                             <div className="field-label is-normal">
-                                <label className="label">
+                                <label className="label has-text-light">
                                     Search Name
                         </label>
                             </div>
