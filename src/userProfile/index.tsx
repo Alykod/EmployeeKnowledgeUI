@@ -26,10 +26,9 @@ const UserProfile = () => {
     }
 
     const userDisplay = () => {
-        console.log(userData)
         return (
             <>
-            <Header myAccount={true} isAdmin={userData.role.name === "Admin" ? true : false}/>
+            <Header myAccount={true} isAdmin={userData.role && userData.role.name === "Admin" ? true : false}/>
             <div>
                 <section className="hero is-primary">
                     <div className="hero-body columns is-centered">
@@ -38,7 +37,7 @@ const UserProfile = () => {
                             <h1 className="title ">Welcome</h1> <h2 className="subtitle">{userData.firstName} <label className="has-text-black">{userData.lastName}</label></h2>
                             </div>
                             <div className="column has-text-centered">
-                            <label className="title">{userData.role.name} <span className="subtitle has-text-black">({userData.fullTimeEmployee ? "Full Time" : "Contractor"})</span></label>
+                            <label className="title">{userData.role && userData.role.name} <span className="subtitle has-text-black">({userData.fullTimeEmployee ? "Full Time" : "Contractor"})</span></label>
                             <label className="label">Based in <span className="subtitle">{userData.city},{userData.state}</span></label>
                             </div>
                         {/* </div> */}

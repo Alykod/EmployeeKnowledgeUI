@@ -15,7 +15,7 @@ const SignUp = () => {
     // const [country, setCountry] = useState("");
     const [fullTimeEmployee, setFullTimeEmployee] = useState(true);
     const [role, setRole] = useState(false)
-    const [roleName, setRoleName] = useState("");
+    const [roleName, setRoleName] = useState("unassigned");
      const history = useHistory();
     const dispatch = useDispatch();
 
@@ -24,7 +24,7 @@ const SignUp = () => {
     }
     const handleRoleChange = (value: boolean, type: any) => {
         let role = ""
-        if(value == true) {
+        if(value === true) {
             role = "Admin"
             setRole(true);
             setRoleName(role)

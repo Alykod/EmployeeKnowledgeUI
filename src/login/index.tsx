@@ -67,7 +67,7 @@ export default function Login() {
                                 e.preventDefault();
                                 setRegistration(true);
                             }}>Sign Up</a> &nbsp;·&nbsp;
-                            <a href="../">Forgot Password</a> &nbsp;·&nbsp;
+                            {/* <a href="../">Forgot Password</a> &nbsp;·&nbsp; */}
                         </p>
                     </div>
                 </div>}

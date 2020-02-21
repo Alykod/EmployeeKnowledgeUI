@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom'
+import { client } from '../services/apolloClient';
 
 const Header = (props: any) => {
     const history = useHistory()
@@ -7,10 +8,11 @@ const Header = (props: any) => {
 
     const handleSignOut = () => {
         localStorage.removeItem("token");
+        client.cache.reset();
         return history.push('/')
     }
 
-    const MyAccountDash = (isAdmin: any) => {
+    const MyAccountDash = ({isAdmin}: any) => {
         return (
             <>
             <div className="navbar-start">
