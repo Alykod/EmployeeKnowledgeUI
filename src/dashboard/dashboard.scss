@@ -104,3 +104,28 @@ datalist {
       flex-grow: 2; /* overwrites previous value of 1 */
     }
   }
+
+  .btn-animated {
+    animation: moveInBottom 2s ease-out infinite;
+    animation-fill-mode: backwards;
+}
+
+@keyframes moveInBottom {
+    100% {
+    transform: scale(1.2, 1.2);
+    transition: opacity 0.3s ease-in-out;
+    z-index: -1;
+    box-shadow: 0 1em 2em  rgba(0,0,0,0.15);
+    transition: box-shadow 0.3 ease-in-out;
+    }
+
+    // 100% {
+    //     opacity: 1;
+    //     transform: translateY(0px);
+    // }
+}
+
+
+.isClickable {
+    cursor: pointer;
+}

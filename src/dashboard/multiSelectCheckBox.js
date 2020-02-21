@@ -39,6 +39,7 @@ const MultiSelect = props => {
         <label className="checkbox column is-one-third" key={value._id}>
           <input
             type="checkbox"
+            style={{margin: '.5em'}}
             name={value.name}
             checked={allStates[value.name] || false}
             onChange={e => {
@@ -49,7 +50,7 @@ const MultiSelect = props => {
               handleChecked(value.name);
             }}
           />
-          {value.name}
+          <p className="label is-capitalized has-text-weight-normal">{value.name}</p>
         </label>
       );
     });
@@ -62,6 +63,7 @@ const MultiSelect = props => {
         <label className="checkbox column is-one-third" key={index}>
           <input
             type="checkbox"
+            style={{margin: '.5rem'}}
             name={value}
             checked={allStates[value] || false}
             onChange={e => {
@@ -69,7 +71,7 @@ const MultiSelect = props => {
               handleChecked(value);
             }}
           />
-          {value}
+          <p className="label is-capitalized has-text-weight-normal">{value}</p>
         </label>
       );
     });
@@ -93,7 +95,7 @@ const MultiSelect = props => {
             setToggleValues(!toggleValues);
             e.preventDefault();
           }}>
-          <label className="label">{props.label}</label>
+          <label className="label isClickable">{props.label}</label>
         </a>
       </div>
       <div className="row is-full column columns is-multiline">

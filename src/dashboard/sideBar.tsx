@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import Dropdown from './searchDropDown'
 import { useQuery } from '@apollo/react-hooks'
 import { GetSkills } from '../services/queries';
@@ -21,13 +21,14 @@ const SideBar = (props: any) => {
     const [listOfSkills, setListOfSkills] = useState<Skill[]>([]);
     const [skillsSelected, setSkillsSelected] = useState([]);
     const [initialRender, setInitialRender] = useState(true);
-
+    const buttonRef = useRef<HTMLButtonElement>(null)
 
     useEffect(() => {
         if (skills) {
             setListOfSkills(skills.skills);
         }
     }, [skills])
+
 
     // useEffect(() => {
     //     if(initialRender) {
@@ -119,13 +120,14 @@ const SideBar = (props: any) => {
                             <input type="radio" value="fullTimeEmployee" checked={fullTimeEmployee} onChange={(e)=> {
                                 handleEmployeeStatus(true);
                             }}/>
-                            Full Time Employee
+                             <p className="label is-capitalized has-text-weight-normal">Full Time Employee</p>
+                            
                         </label>
                         <label className="label column is-half">
                             <input type="radio" value="contractor" checked={!fullTimeEmployee} onChange={(e)=> {
                                 handleEmployeeStatus(false);
                             }}/>
-                            Contractor
+                            <p className="label is-capitalized has-text-weight-normal">Contractor</p>
                         </label>
                     </div>
                     <hr className="has-background-black"></hr>
@@ -137,20 +139,20 @@ const SideBar = (props: any) => {
                             <input type="radio" value="available" checked={available} onChange={(e)=> {
                                 setAvailable(true)
                             }}/>
-                            Available
+                            <p className="label is-capitalized has-text-weight-normal">Available</p>
                         </label>
                         <label className="label column is-half">
                             <input type="radio" value="notAvailable" checked={!available} onChange={(e)=> {
                                 setAvailable(false)
                                 } }/>
-                            Not Available
+                            <p className="label is-capitalized has-text-weight-normal">Not Available</p>
                         </label>
                     </div>
                     <hr className="has-background-black"></hr>
                 </div>
                 <br/>
                 <div className="row is-full">
-                    <button className="button is-primary" onClick={(e)=> {
+                    <button className="button is-primary btn-animated" ref={buttonRef} onClick={(e)=> {
                         e.preventDefault();
                         handleSubmitFilter()
                     }}>
