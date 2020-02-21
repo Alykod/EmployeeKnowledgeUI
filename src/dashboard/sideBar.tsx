@@ -98,8 +98,9 @@ const SideBar = (props: any) => {
     }
 
     return (
-        <div className="column is-2">
-            <aside className="menu rows has-text-centered">
+        <div className="column is-2 has-background-info">
+            <div className="hero">
+            <aside className="menu rows has-text-centered has-text-white">
                 <h1 className="is-size-2">Filtering Bar</h1>
                 <br/>
                 <div className="row is-full">
@@ -120,14 +121,14 @@ const SideBar = (props: any) => {
                             <input type="radio" value="fullTimeEmployee" checked={fullTimeEmployee} onChange={(e)=> {
                                 handleEmployeeStatus(true);
                             }}/>
-                             <p className="label is-capitalized has-text-weight-normal">Full Time Employee</p>
+                             <p className="label is-capitalized has-text-weight-normal has-text-light">Full Time Employee</p>
                             
                         </label>
                         <label className="label column is-half">
                             <input type="radio" value="contractor" checked={!fullTimeEmployee} onChange={(e)=> {
                                 handleEmployeeStatus(false);
                             }}/>
-                            <p className="label is-capitalized has-text-weight-normal">Contractor</p>
+                            <p className="label is-capitalized has-text-weight-normal has-text-light">Contractor</p>
                         </label>
                     </div>
                     <hr className="has-background-black"></hr>
@@ -139,13 +140,13 @@ const SideBar = (props: any) => {
                             <input type="radio" value="available" checked={available} onChange={(e)=> {
                                 setAvailable(true)
                             }}/>
-                            <p className="label is-capitalized has-text-weight-normal">Available</p>
+                            <p className="label is-capitalized has-text-weight-normal has-text-light">Available</p>
                         </label>
                         <label className="label column is-half">
                             <input type="radio" value="notAvailable" checked={!available} onChange={(e)=> {
                                 setAvailable(false)
                                 } }/>
-                            <p className="label is-capitalized has-text-weight-normal">Not Available</p>
+                            <p className="label is-capitalized has-text-weight-normal has-text-light">Not Available</p>
                         </label>
                     </div>
                     <hr className="has-background-black"></hr>
@@ -163,6 +164,7 @@ const SideBar = (props: any) => {
                    
                 </div>
             </aside>
+            </div>
         </div>
     )
 

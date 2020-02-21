@@ -50,7 +50,7 @@ const MultiSelect = props => {
               handleChecked(value.name);
             }}
           />
-          <p className="label is-capitalized has-text-weight-normal">{value.name}</p>
+          <p className="label is-capitalized has-text-weight-normal has-text-light">{value.name}</p>
         </label>
       );
     });
@@ -71,7 +71,7 @@ const MultiSelect = props => {
               handleChecked(value);
             }}
           />
-          <p className="label is-capitalized has-text-weight-normal">{value}</p>
+          <p className="label is-capitalized has-text-weight-normal has-text-light">{value}</p>
         </label>
       );
     });
