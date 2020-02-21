@@ -152,12 +152,15 @@ const SideBar = (props: any) => {
                 </div>
                 <br/>
                 <div className="row is-full">
+                    <div className="buttonWrap">
                     <button className="button is-primary btn-animated" ref={buttonRef} onClick={(e)=> {
                         e.preventDefault();
                         handleSubmitFilter()
                     }}>
                         Filter
                     </button>
+                    </div>
+                   
                 </div>
             </aside>
         </div>

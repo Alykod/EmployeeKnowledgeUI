@@ -40,7 +40,6 @@ interface Skill {
 const UserDetails = (props: Props) => {
     const { user } = props;
     const {data: roles, loading, error} = useQuery(GetRoles)
-    console.log(roles)
     const [userAvailability, setUserAvailability] = useState(user.available)
     const [toggleUserAvailability, setToggleUserAvailability] = useState(false);
     const [changeUserAvailability] = useMutation(ChangeUserAvailability);

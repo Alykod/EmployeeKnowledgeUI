@@ -105,25 +105,25 @@ datalist {
     }
   }
 
-  .btn-animated {
-    animation: moveInBottom 2s ease-out infinite;
-    animation-fill-mode: backwards;
-}
+//   .btn-animated {
+//     animation: moveInBottom 2s ease-out infinite;
+//     animation-fill-mode: backwards;
+// }
 
-@keyframes moveInBottom {
-    100% {
-    transform: scale(1.2, 1.2);
-    transition: opacity 0.3s ease-in-out;
-    z-index: -1;
-    box-shadow: 0 1em 2em  rgba(0,0,0,0.15);
-    transition: box-shadow 0.3 ease-in-out;
-    }
+// @keyframes moveInBottom {
+//     100% {
+//     transform: scale(.8, .8);
+//     transition: opacity 0.3s ease-in-out;
+//     z-index: -1;
+//     box-shadow: 0 1em 2em  rgba(0,0,0,0.15);
+//     transition: box-shadow 0.3 ease-in-out;
+//     }
 
-    // 100% {
-    //     opacity: 1;
-    //     transform: translateY(0px);
-    // }
-}
+//     // 100% {
+//     //     opacity: 1;
+//     //     transform: translateY(0px);
+//     // }
+// }
 
 
 .isClickable {

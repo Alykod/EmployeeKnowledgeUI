@@ -68,7 +68,9 @@ const Dropdown = (props: any) => {
     if (!findSame) {
       const findSimilar = props.data.filter((skill: Skill) => skill.name.toLowerCase().includes(lowerCaseValue));
       setSelectedValue(value);
+      props.handleSelectedItem(value);
       setListOfSkills(findSimilar);
+      // handleSelection(value)
     } else {
       handleSelection(value)
       // setSelectedValue(event.target.value);

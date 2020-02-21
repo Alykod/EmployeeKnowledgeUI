@@ -19,15 +19,15 @@ const Header = (props: any) => {
                 <div className="navbar-item">
                     <label className="label has-text-white">AgileThought Employee Management</label>
                 </div>
-                {isAdmin && <div className="navbar-item">
+            </div>
+            <div className="navbar-end" style={{ marginRight: "1em", marginTop: ".5em" }}>
+            {isAdmin && <div className="navbar-item">
                     <button className="button is-primary" onClick={()=> {
                         history.push('/dashboard')
                     }}>
                         Dashboard
                     </button>
                     </div>}
-            </div>
-            <div className="navbar-end" style={{ marginRight: "1em", marginTop: ".5em" }}>
             <div className="navbar-item">
                 <button className="button is-danger" onClick={() => {
                     handleSignOut();
@@ -96,6 +96,11 @@ const Header = (props: any) => {
 
 return (
     <nav className="navbar is-fixed-top columns has-background-black" role="navigation" aria-label="dashboard filter">
+        <div className="navbar-brand">
+                    <a href="https://agilethought.com" className="navbar-item">
+                        <img src='https://agilethought.com/wp-content/uploads/2019/08/logotype.png' />
+                    </a>
+                </div>
         {props.myAccount ? <MyAccountDash isAdmin={props.isAdmin}/> : <DashBoardNav/>}
     </nav>
 )
