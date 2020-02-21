@@ -8,7 +8,11 @@ export const handleFilterEmployees = (allEmployees, filteringValues) => {
     let filterRoles = filteringRoles(employee, filteringValues);
     let filterFullTimeEmployee = employee.fullTimeEmployee === filteringValues.fullTimeEmployee 
     let filterAvailable = employee.available === filteringValues.available
-    if(filterCities && filterSkills && filterRoles && filterFullTimeEmployee & filterAvailable) {
+    let filterName = true
+    if(filteringValues.userName !== ""){
+       filterName = employee.firstName.toLowerCase().includes(filteringValues.userName.toLowerCase()) || employee.lastName.toLowerCase().includes(filteringValues.userName.toLowerCase())
+    }
+    if(filterCities && filterSkills && filterRoles && filterFullTimeEmployee && filterAvailable && filterName) {
       return true;
     } else {
       return false;
