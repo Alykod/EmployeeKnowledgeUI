@@ -15,7 +15,7 @@ const Header = (props: any) => {
     const MyAccountDash = ({isAdmin}: any) => {
         return (
             <>
-            <div className="navbar-start">
+            <div className="navbar-start forDesktop">
                 <div className="navbar-item">
                     <label className="label has-text-white">AgileThought Employee Management</label>
                 </div>
@@ -45,7 +45,7 @@ const Header = (props: any) => {
         return (
             <>
             <div className="navbar-start">
-            {!props.displayBackButton && <div className="navbar-menu is-active column">
+            {!props.displayBackButton && <div className="navbar-menu is-active column has-background-black">
                 <div className="navbar-item"><a href="ToggleSideBar" onClick={e => {
                     e.preventDefault();
                     setToggleSideBar(!toggleSideBar)
@@ -55,7 +55,7 @@ const Header = (props: any) => {
                 </a>
                 </div>
             </div>}
-            <div className="navbar-item">
+            <div className="navbar-item forDesktop">
                 <label className="label has-text-white">AgileThought Employee Management</label>
             </div>
         </div>
@@ -96,7 +96,7 @@ const Header = (props: any) => {
 
 return (
     <nav className="navbar is-fixed-top columns has-background-black" role="navigation" aria-label="dashboard filter">
-        <div className="navbar-brand">
+        <div className="navbar-brand forDesktop" >
                     <a href="https://agilethought.com" className="navbar-item">
                         <img src='https://agilethought.com/wp-content/uploads/2019/08/logotype.png' />
                     </a>

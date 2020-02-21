@@ -19,6 +19,12 @@
     }
 }
 
+.forDesktop {
+    @include for-phone-only {
+        display: none;
+    }
+}
+
 .cardSmall {
     cursor: pointer;
     width: 22vw;
