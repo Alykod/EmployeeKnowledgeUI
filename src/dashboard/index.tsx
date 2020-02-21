@@ -42,7 +42,8 @@ const DashBoard = () => {
     
     const handleSkillsCard = () => {
         return employeesList && employeesList.length > 0 && employeesList.map((user: any, index: number) => {
-            return <UserCard key={index} user={user} selectedSkill={selectedSkill} handleUserSelected={handleUserSelected} />
+            debugger;
+            return <UserCard key={user._id} user={user} selectedSkill={selectedSkill} handleUserSelected={handleUserSelected} />
         })
     }
 
